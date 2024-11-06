@@ -1,0 +1,18 @@
+GET http://localhost:80/api/item?id=99
+Accept: application/json
+
+###
+# curl -X POST http://localhost:8080/auth
+#  -H "Content-Type: application/json"
+#  -d '{"username": "seu_username", "password": "sua_password"}'
+POST http://localhost:8080/authenticate
+Content-Type: application/json
+
+{"username": "username", "password": "password"}
+
+<> 2024-11-06T122659.200.txt
+
+
+curl -X GET http://localhost:8080/private \
+  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktand0Iiwic3ViIjoidXNlcm5hbWUiLCJleHAiOjE3MzA5NDYyNjIsImlhdCI6MTczMDkxMDI2Miwic2NvcGUiOiJyZWFkIn0.IvFRcJ9GHX-NZWdNx7lKtTFuDXsrShgKFv5cvEtc5cjWet7e7j8YaDR74qyYrx6Xy4C7T1gA47MX7LpK5oK5mI5fgz-VPv2dbT1z3Hw6IAbrA2FmBT0NzvjMT1B-Zd670JbBE1OHbkNoERL2NKjeHrzlu0NESijczVGoqXqbA6tFFoSUrPI6lHwlevyMpt0jL4UZOn6YQ65O8DHMj8I75NH1JLc-WLj2r3_FSJo9j5QQZTyXfc1Mc_vPlvgZIFln11n1xPRgesGdmrCNANhUgnw0CaPAJIMn4R_8nJoxvBa5u8GB14n5y0bH5vjJ_cLP3wGQF8FhmIn0U25_Dh9AEg"
+
