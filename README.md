@@ -1,6 +1,6 @@
 # Tutorial springboot + spring security + jwt
 
-- Autor: Iratuã Júnior - inspirado no tutorial da Giuliana Bezerra [github](https://github.com/giuliana-bezerra/spring-security-jwt/tree/main) 
+- Autor: Iratuã Júnior - inspirado no tutorial da Giuliana Bezerra ([github do projeto original](https://github.com/giuliana-bezerra/spring-security-jwt/tree/main)) 
 - [Vídeo no YOUTUBE](https://www.youtube.com/watch?v=kEJ8a1w4a2Q&t=1496s)
 - Data: 06/11/2024
 - Versão do springboot: 3.3.5
