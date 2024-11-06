@@ -1,7 +1,7 @@
 
 ![The San Juan Mountains are beautiful!](/images/capa.png "Capa do post")
 
-# Tutorial springboot + spring security + jwt
+# Tutorial spring boot + spring security + jwt
 
 - Autor: Iratuã Júnior - inspirado no tutorial da Giuliana Bezerra ([github do projeto original](https://github.com/giuliana-bezerra/spring-security-jwt/tree/main)) 
 - [Vídeo da Giuliana no YOUTUBE](https://www.youtube.com/watch?v=kEJ8a1w4a2Q&t=1496s)
