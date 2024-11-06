@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15  # Utilize a versão que preferir
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: myuser        # Substitua por seu usuário
+      POSTGRES_PASSWORD: mypassword  # Substitua pela sua senha
+      POSTGRES_DB: mydatabase       # Substitua pelo nome do seu banco de dados
+    volumes:
+      - ./data:/var/lib/postgresql/data  # Monta a pasta `data` para persistir os dados
+    ports:
+      - "5432:5432"

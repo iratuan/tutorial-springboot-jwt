@@ -926,6 +926,101 @@ CREATE TABLE USERS
 
 ```
 
+- Requisições HTTP para testes
+
+  Nesse ponto você poderá usar o postman, isomnia ou qualquer client REST.
+```text
+##
+# curl -X POST http://localhost:8080/auth
+#  -H "Content-Type: application/json"
+#  -d '{"username": "seu_username", "password": "sua_password"}'
+POST http://localhost:8080/authenticate
+Content-Type: application/json
+
+{"username": "username", "password": "password"}
+
+<> 2024-11-06T151919.200.txt
+
+###
+
+# curl -X GET http://localhost:8080/private
+#  -H "Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktand0Iiwic3ViIjoidXNlcm5hbWUiLCJleHAiOjE3MzA5NDYyNjIsImlhdCI6MTczMDkxMDI2Miwic2NvcGUiOiJyZWFkIn0.IvFRcJ9GHX-NZWdNx7lKtTFuDXsrShgKFv5cvEtc5cjWet7e7j8YaDR74qyYrx6Xy4C7T1gA47MX7LpK5oK5mI5fgz-VPv2dbT1z3Hw6IAbrA2FmBT0NzvjMT1B-Zd670JbBE1OHbkNoERL2NKjeHrzlu0NESijczVGoqXqbA6tFFoSUrPI6lHwlevyMpt0jL4UZOn6YQ65O8DHMj8I75NH1JLc-WLj2r3_FSJo9j5QQZTyXfc1Mc_vPlvgZIFln11n1xPRgesGdmrCNANhUgnw0CaPAJIMn4R_8nJoxvBa5u8GB14n5y0bH5vjJ_cLP3wGQF8FhmIn0U25_Dh9AEg"
+GET http://localhost:8080/private
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJzcHJpbmctc2VjdXJpdHktand0Iiwic3ViIjoidXNlcm5hbWUiLCJleHAiOjE3MzA5NTMxNTksImlhdCI6MTczMDkxNzE1OSwic2NvcGUiOiJyZWFkIn0.PctZN-6SbtSXsNt8r1vVf8j0XWqB4Vlx_5tkE5mMHK2WuRWG4_bWdencQ4I2cw1qbaGeRhqP5Ut6uFG0lEqQj0thDSjdOWlnpjDqTFa0_sawogGSU_dPrPxGx7PC1hR8NniGv3NZlYpxjzaAEQps20PEC4nJp3GQ05ci9Oxsj_wTyy0LvzU_95rlAukFWGD-BFpexWk1XWk0EkNtk9A-2SZyKcYCfXGJJb788Jz6ymYsRW3tcKwj_VjBoGVvb7I8Ualju-SqWQLia1X6Rxwh1t1X-RZkpvoBrbSA5dPITEdPpF9IquRyScKezHCTw9B8uFEHRhbxuq2iVy6uKC3OyA
+
+<> 2024-11-06T151952.200.txt
+<> 2024-11-06T151941.200.txt
+
+###
+```
+
 Creio que, com as informações acima, você consiga tranquilamente seguir o tutorial e replicar em seus projetos.
 
 [**Iratuã Júnior** @iratuan](https://github.com/iratuan)
+
+___________________
+## Melhorias
+
+### Criação do container do postgres
+Primeiramente, adicione a dependência do postgres no `pom.xml` do seu projeto.
+```xml
+ <dependency>
+   <groupId>org.postgresql</groupId>
+   <artifactId>postgresql</artifactId>
+   <scope>runtime</scope>
+</dependency>
+```
+
+Após isso, modifique o seu arquivo `application.properties` para o conteúdo abaixo:
+
+```properties
+spring.application.name=sboot-security-jwt
+
+# Configuração do DataSource
+spring.datasource.url=jdbc:postgresql://localhost:5432/mydatabase
+spring.datasource.username=myuser
+spring.datasource.password=mypassword
+
+# Configurações adicionais para o PostgreSQL
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+
+# Configuração para mostrar as queries SQL no console
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+# Configuração para gerenciamento de schema (opcional)
+spring.jpa.hibernate.ddl-auto=update
+
+
+jwt.private.key=classpath:app.key
+jwt.public.key=classpath:app.pub
+
+```
+
+Após isso, crie o arquivo `docker-compose.yml` na raiz do seu projeto.
+
+```yaml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15  # Utilize a versão que preferir
+    container_name: postgres_container
+    environment:
+      POSTGRES_USER: myuser        # Substitua por seu usuário
+      POSTGRES_PASSWORD: mypassword  # Substitua pela sua senha
+      POSTGRES_DB: mydatabase       # Substitua pelo nome do seu banco de dados
+    volumes:
+      - ./data:/var/lib/postgresql/data  # Monta a pasta `data` para persistir os dados
+    ports:
+      - "5432:5432"
+
+```
+*** Não esqueça de criar o diretório `data` na raiz do seu projeto.
+
+Execute o comando `docker compose up -d` para subir o container.
+
+____________________
+### Evoluções futuras
+- Criar a funcionalidade de adicionar as `ROLES` no `TOKEN JWT`, para que, futuras funcionalidades possam filtra o acesso (`AUTORIZAÇÃO`) dos recursos disponíveis na API.
